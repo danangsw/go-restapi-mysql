@@ -12,11 +12,12 @@ import (
 
 func main() {
 	dbName := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASS")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 
-	connection, err := driver.ConnectSQL(dbHost, dbPort, "root", dbPass, dbName)
+	connection, err := driver.ConnectSQL(dbHost, dbPort, dbUser, dbPass, dbName)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
@@ -31,8 +32,8 @@ func main() {
 		rt.Mount("/posts", postRouter(pHandler))
 	})
 
-	fmt.Println("Server listen at :8005")
-	http.ListenAndServe(":8005", r)
+	fmt.Println("Server listen at :8088")
+	http.ListenAndServe(":8088", r)
 }
 
 // A completely separate router for posts routes
