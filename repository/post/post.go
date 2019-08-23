@@ -44,13 +44,13 @@ func (m *mysqlPostRepo) fetch(ctx context.Context, query string, args ...interfa
 }
 
 func (m *mysqlPostRepo) Fetch(ctx context.Context, num int64) ([]*model.Post, error) {
-	query := "Select id, title, content From posts limit ?"
+	query := "Select id, title, content From post limit ?"
 
 	return m.fetch(ctx, query, num)
 }
 
 func (m *mysqlPostRepo) GetByID(ctx context.Context, id int64) (*model.Post, error) {
-	query := "Select id, title, content From posts where id=?"
+	query := "Select id, title, content From post where id=?"
 
 	rows, err := m.fetch(ctx, query, id)
 	if err != nil {
@@ -68,7 +68,7 @@ func (m *mysqlPostRepo) GetByID(ctx context.Context, id int64) (*model.Post, err
 }
 
 func (m *mysqlPostRepo) Create(ctx context.Context, p *model.Post) (int64, error) {
-	query := "Insert posts SET title=?, content=?"
+	query := "Insert post SET title=?, content=?"
 
 	stmt, err := m.Conn.PrepareContext(ctx, query)
 	if err != nil {
@@ -86,7 +86,7 @@ func (m *mysqlPostRepo) Create(ctx context.Context, p *model.Post) (int64, error
 }
 
 func (m *mysqlPostRepo) Update(ctx context.Context, p *model.Post) (*model.Post, error) {
-	query := "Update posts set title=?, content=? where id=?"
+	query := "Update post set title=?, content=? where id=?"
 
 	stmt, err := m.Conn.PrepareContext(ctx, query)
 	if err != nil {
@@ -107,7 +107,7 @@ func (m *mysqlPostRepo) Update(ctx context.Context, p *model.Post) (*model.Post,
 }
 
 func (m *mysqlPostRepo) Delete(ctx context.Context, id int64) (bool, error) {
-	query := "Delete From posts Where id=?"
+	query := "Delete From post Where id=?"
 
 	stmt, err := m.Conn.PrepareContext(ctx, query)
 	if err != nil {
